@@ -107,7 +107,7 @@ These results show that **academic performance** and **financial stability** are
 <img width="700" height="432" alt="000010" src="https://github.com/user-attachments/assets/0cada049-7633-4eac-8519-3ee0c2b7f77c" />
 
 
-*Figure 1 shows the sequence of decision rules used by the classification model to identify students who are at risk of dropping out and may require intervention.*
+**Figure 1.** Decision tree showing the sequence of classification rules used to identify students at risk of dropout based on second-semester academic performance, tuition fee status, age at enrollment, and first-semester enrollment behavior.
 
 ## Interpretation of the Decision Tree
 
