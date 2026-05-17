@@ -1,8 +1,5 @@
 # Decision Tree Classifying Student Dropout Risk Factors
 
-
-# Logistic Regression predicting Student Dropout
-
 ## Introduction
 
 This project focuses on building a Decision Tree classification model to classify factors or indicators that can identify undergraduate student dropout risk. By analyzing a dataset containing student demographics, academic performance, and socio-economic information, the model categorizes which variables are most critical in determining a student's likelihood of leaving their studies. The goal is to provide an interpretable framework that assists educational institutions in allocating resources efficiently and providing proactive support to at-risk students through early interventions. The analysis is conducted using the R programming language, covering data loading, exploration, and the construction of a robust classification tree.
