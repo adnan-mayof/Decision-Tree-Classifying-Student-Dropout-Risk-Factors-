@@ -1,3 +1,4 @@
+<img width="700" height="432" alt="000010" src="https://github.com/user-attachments/assets/fe6adcc5-efb6-4be8-91ff-0c0172766255" />
 # Decision Tree Classifying Student Dropout Risk Factors
 
 ## Introduction
@@ -104,7 +105,8 @@ These results show that **academic performance** and **financial stability** are
 
 ## Figure 1. Decision Tree for Student Dropout Risk Classification
 
-**[Insert Figure 1 here]**
+<img width="700" height="432" alt="000010" src="https://github.com/user-attachments/assets/0cada049-7633-4eac-8519-3ee0c2b7f77c" />
+
 
 *Figure 1 shows the sequence of decision rules used by the classification model to identify students who are at risk of dropping out and may require intervention.*
 
