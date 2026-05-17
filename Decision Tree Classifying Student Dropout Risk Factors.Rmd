@@ -1,0 +1,240 @@
+---
+title: "Decision Tree Classifying Student Dropout Risk Factors"
+author: "Adnan Mayof"
+date: "May 17, 2026"
+output: html_document
+---
+
+This R Markdown document guides through a decision tree classifying Student Dropout Risk Factors. This project focuses on building a Decision Tree classification model to classify factors or indicators that can identify undergraduate student dropout risk. By analyzing a dataset containing student demographics, academic performance, and socio-economic information, the model categorizes which variables are most critical in determining a student's likelihood of leaving their studies. The goal is to provide an interpretable framework that assists educational institutions in allocating resources efficiently and providing proactive support to at-risk students through early interventions. The analysis is conducted using the R programming language, covering data loading, exploration, and the construction of a robust classification tree.
+
+
+In this project, the dataset consists of **4,424 observations (rows)** and **35 numeric variables**, including:
+
+1. **One dependent variable (target outcome):**  
+   
+   &nbsp;&nbsp;&nbsp;&nbsp;**Dropout** — indicates whether a student dropped out.  
+   &nbsp;&nbsp;&nbsp;&nbsp;A value of `1` represents students who dropped out, while `0` represents students who did not drop out.
+
+2. **Thirty-four independent variables (predictors):**  
+   
+   &nbsp;&nbsp;&nbsp;&nbsp;These variables are used to predict student dropout and include factors related to  
+   &nbsp;&nbsp;&nbsp;&nbsp;**demographics, academic performance, financial status, and macroeconomic conditions**.
+
+
+
+```{r}
+#🧹 1. Clean Environment
+# -----------------------------------------
+# IF: We are starting a new analysis session
+# THEN: Clear all previous objects and reset R
+# WHY: Prevents old data or models from interfering with results
+# -----------------------------------------
+
+rm(list = ls())
+gc()
+graphics.off()
+cat("\014")
+```
+
+```{r}
+# ⚙️ 2. Setup R Markdown
+# -----------------------------------------
+# IF: We want reproducible reporting
+# THEN: Show all code in output
+# WHY: Ensures transparency and allows results to be traced step-by-step
+# -----------------------------------------
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+ 
+```{r}
+# 📦 3. Load Libraries
+# -----------------------------------------
+# IF: We need decision tree modeling tools
+# THEN: Load required libraries
+# WHY: Provides functions for modeling, plotting, and evaluation
+# -----------------------------------------
+#install.packages("rpart")
+library(rpart)
+#install.packages("rpart.plot")
+library(rpart.plot)
+#install.packages("caTools")
+library(caTools)
+```
+
+
+
+```{r}
+# 📂 4. Load Data
+# -----------------------------------------
+# IF: We want to analyze student dropout patterns
+# THEN: Load dataset into R
+# WHY: Provides raw data needed for modeling and prediction
+# -----------------------------------------
+
+R_Data <- read.csv("R_Data.csv")
+```
+ 
+
+
+
+
+```{r}
+# 🔍 5. Inspect Data
+# -----------------------------------------
+# IF: We need to understand data structure
+# THEN: Check column names and structure
+# WHY: Ensures variables are correctly formatted before modeling
+# -----------------------------------------
+
+names(R_Data)
+str(R_Data)
+```
+
+ 
+```{r}
+
+# ✂️ 6. Split Data
+# -----------------------------------------
+# IF: We want to evaluate model performance fairly
+# THEN: Split data into training and testing sets
+# WHY: Training builds model, testing checks real-world performance
+# -----------------------------------------
+
+split <- sample.split(R_Data$Dropout, SplitRatio = 0.8)
+
+training <- subset(R_Data, split == TRUE)
+testing  <- subset(R_Data, split == FALSE)
+
+```
+
+```{r}
+# 🌳 7. Build Decision Tree (Gini-based learning)
+# -----------------------------------------
+# IF: We want to predict student dropout
+# THEN: Build decision tree model
+# WHY: Learns patterns using Gini impurity to separate classes effectively
+# -----------------------------------------
+
+tree_model <- rpart(
+  Dropout ~ .,
+  data = training,
+  method = "class"
+)
+
+summary(tree_model)
+rpart.plot(tree_model)
+```
+
+```{r}
+# ⭐ 8. Variable Importance
+
+# -----------------------------------------
+# IF: We want to know what drives dropout most
+# THEN: Extract variable importance
+# WHY: Shows which factors reduce Gini impurity the most
+# -----------------------------------------
+
+tree_model$variable.importance
+```
+
+
+
+```{r}
+# 🎯 9. Training Accuracy
+# -----------------------------------------
+# IF: We want to measure performance on known data
+# THEN: Predict training outcomes
+# WHY: Shows how well model learned patterns it was trained on
+# -----------------------------------------
+
+train_pred <- predict(tree_model, training, type = "class")
+
+train_table <- table(training$Dropout, train_pred)
+
+train_accuracy <- sum(diag(train_table)) / sum(train_table)
+
+train_accuracy
+ 
+```
+
+
+
+```{r}
+# 🎯 10. Testing Accuracy
+# -----------------------------------------
+# IF: We want to test real-world performance
+# THEN: Predict unseen data outcomes
+# WHY: Measures how well model generalizes beyond training data
+# -----------------------------------------
+
+test_pred <- predict(tree_model, testing, type = "class")
+
+test_table <- table(testing$Dropout, test_pred)
+
+test_accuracy <- sum(diag(test_table)) / sum(test_table)
+
+test_accuracy
+```
+
+
+
+
+```{r}
+# ⚖️ 11. Overfitting vs Underfitting
+# -----------------------------------------
+# IF: We want to evaluate model quality
+# THEN: Compare training vs testing accuracy
+# WHY: Detects whether model is too complex or too simple
+# -----------------------------------------
+
+difference <- abs(train_accuracy - test_accuracy)
+
+difference
+
+# Interpretation logic
+
+if(train_accuracy > 0.90 & difference > 0.10){
+
+  cat("OVERFITTING: Model memorizes training data but performs poorly on new data.\n")
+
+} else if(train_accuracy < 0.70 & test_accuracy < 0.70){
+
+  cat("UNDERFITTING: Model is too simple and misses important patterns.\n")
+
+} else {
+
+  cat("GOOD FIT: Model balances learning and generalization well.\n")
+
+}
+
+```
+
+
+
+```{r}
+ 
+```
+
+
+```{r}
+ 
+```
+
+
+
+```{r}
+ 
+```
+
+
+```{r}
+ 
+```
+
+
+
+```{r}
+ 
+```
