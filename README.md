@@ -1,4 +1,3 @@
-<img width="700" height="432" alt="000010" src="https://github.com/user-attachments/assets/fe6adcc5-efb6-4be8-91ff-0c0172766255" />
 # Decision Tree Classifying Student Dropout Risk Factors
 
 ## Introduction
